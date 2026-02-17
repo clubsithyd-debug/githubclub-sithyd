@@ -1,0 +1,136 @@
+/* SymbiHackathon Page Specific Styles */
+
+/* Hero Section with gradient overlay */
+.hackathon-hero {
+    background: linear-gradient(135deg, rgba(1, 4, 9, 0.95) 0%, rgba(13, 17, 23, 0.95) 100%);
+    position: relative;
+}
+
+/* Countdown timer specific styling */
+#hackathon-timer {
+    animation: pulseGlow 2s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+    0%, 100% {
+        filter: drop-shadow(0 0 5px rgba(57, 211, 83, 0.3));
+    }
+    50% {
+        filter: drop-shadow(0 0 15px rgba(57, 211, 83, 0.5));
+    }
+}
+
+/* Section alternating backgrounds */
+.section-dark {
+    background: var(--ghpanel);
+}
+
+.section-light {
+    background: var(--ghbg);
+}
+
+/* Committee card hover effects */
+.committee-card {
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.committee-card:hover {
+    border-color: var(--ghgreen);
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(57, 211, 83, 0.2);
+}
+
+/* Coming Soon badge */
+.coming-soon {
+    display: inline-block;
+    padding: 4px 12px;
+    background: rgba(57, 211, 83, 0.1);
+    border: 1px solid var(--ghgreen);
+    border-radius: 4px;
+    color: var(--ghgreen);
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Register button pulse */
+.register-btn {
+    animation: buttonPulse 2s ease-in-out infinite;
+}
+
+@keyframes buttonPulse {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(57, 211, 83, 0.7);
+    }
+    50% {
+        box-shadow: 0 0 20px 10px rgba(57, 211, 83, 0);
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+    h1 {
+        font-size: 3.5rem;
+    }
+    
+    #hackathon-timer {
+        gap: 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2.5rem;
+    }
+    
+    h2 {
+        font-size: 2rem;
+    }
+    
+    #hackathon-timer {
+        gap: 1rem;
+    }
+    
+    #hackathon-timer span {
+        font-size: 2.5rem;
+    }
+    
+    .btn-primary {
+        padding: 0.75rem 1.5rem;
+        font-size: 16px;
+    }
+    
+    section {
+        padding-top: 3rem !important;
+        padding-bottom: 3rem !important;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 2rem;
+    }
+    
+    h2 {
+        font-size: 1.5rem;
+    }
+    
+    p {
+        font-size: 16px;
+    }
+    
+    #hackathon-timer span {
+        font-size: 2rem;
+    }
+    
+    .btn-primary {
+        padding: 0.625rem 1.25rem;
+        font-size: 14px;
+    }
+    
+    .committee-card {
+        padding: 1rem;
+    }
+}

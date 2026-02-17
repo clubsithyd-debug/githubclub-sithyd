@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loading | GitHub Club</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width:100%; height:100%; background:#000; font-family:'Fira Code',monospace; overflow:hidden; }
+
+    .bios-header {
+      display:flex; justify-content:space-between; align-items:center;
+      padding:10px 28px; border-bottom:1px solid #39d353; background:#000;
+    }
+    .bios-title { color:#39d353; font-size:13px; font-weight:700; letter-spacing:.15em; text-transform:uppercase; }
+    .bios-meta  { color:#39d353; font-size:12px; font-weight:700; letter-spacing:.08em; }
+
+    .terminal {
+      padding:20px 28px; height:calc(100vh - 45px);
+      overflow-y:auto; display:flex; flex-direction:column;
+    }
+    .terminal::-webkit-scrollbar { display:none; }
+    .terminal { -ms-overflow-style:none; scrollbar-width:none; }
+
+    .line { display:block; font-size:14px; line-height:1.85; white-space:pre-wrap; min-height:1.85em; }
+
+    .g { color:#39d353; }
+    .w { color:#f0f6fc; }
+    .m { color:#3d4d3d; }
+
+    .tag-ok      { color:#39d353; }
+    .tag-done    { color:#39d353; }
+    .tag-failed  { color:#f0f6fc; }
+    .tag-warn    { color:#f0f6fc; }
+
+    .cursor {
+      display:inline-block; width:8px; height:1em;
+      background:#39d353; vertical-align:text-bottom;
+      animation:blink .75s steps(1) infinite;
+    }
+    @keyframes blink { 50%{opacity:0} }
+  </style>
+</head>
+<body>
+  <div class="bios-header">
+    <span class="bios-title">GITHUB-CLUB · SIT-HYD &nbsp;·&nbsp; BOOT v1.0.0</span>
+    <span class="bios-meta" id="net-info">NET: DETECTING...</span>
+  </div>
+  <div class="terminal" id="terminal"></div>
+
+  <script>
+  (function () {
+    // ── anti-loop guard ───────────────────────────────────────────
+    // Set a flag BEFORE we redirect so index.html knows we came from loader
+    const LOADED_KEY = 'ghc_loader_done';
+
+    // ── network ───────────────────────────────────────────────────
+    const conn     = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    const downlink = conn?.downlink      ?? 10;
+    const rtt      = conn?.rtt           ?? 20;
+    const effType  = conn?.effectiveType ?? '4g';
+    const profile  = (effType === 'slow-2g' || effType === '2g') ? 'slow'
+                   : effType === '3g' ? 'medium' : 'fast';
+
+    const T = { fast:{ty:14,w:0.7}, medium:{ty:22,w:1.1}, slow:{ty:35,w:1.6} }[profile];
+
+    const speedLabel = downlink >= 1 ? `${downlink.toFixed(1)} Mbps` : `${(downlink*1000).toFixed(0)} Kbps`;
+    const memMb = performance?.memory ? Math.round(performance.memory.jsHeapSizeLimit/1024/1024)+'MB' : '64MB';
+    document.getElementById('net-info').textContent =
+      `NET: ${effType.toUpperCase()} · ${speedLabel} · RTT: ${rtt}ms · MEM: ${memMb}`;
+
+    // ── terminal helpers ──────────────────────────────────────────
+    const terminal = document.getElementById('terminal');
+    const esc = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    const W  = ms => wait(Math.round(ms * T.w));
+
+    function createLine(cls) {
+      const el = document.createElement('span');
+      el.className = `line ${cls}`;
+      terminal.appendChild(el);
+      terminal.scrollTop = terminal.scrollHeight;
+      return el;
+    }
+
+    function printInstant(cls, text) {
+      const el = createLine(cls);
+      el.textContent = text;
+      terminal.scrollTop = terminal.scrollHeight;
+      return el;
+    }
+
+    function blank() { printInstant('m', ''); }
+
+    function typewriteLine(cls, text, tag) {
+      return new Promise(resolve => {
+        const el = createLine(cls);
+        const cur = document.createElement('span');
+        cur.className = 'cursor';
+        el.appendChild(cur);
+        let i = 0;
+        const tick = () => {
+          if (i < text.length) {
+            cur.insertAdjacentText('beforebegin', text[i++]);
+            terminal.scrollTop = terminal.scrollHeight;
+            setTimeout(tick, T.ty + Math.random() * T.ty * 0.3);
+          } else {
+            cur.remove();
+            if (tag) {
+              const TAG_CLS = { OK:'tag-ok', DONE:'tag-done', FAILED:'tag-failed', WARN:'tag-warn' };
+              el.innerHTML = esc(text.padEnd(50,'.')) + ` <span class="${TAG_CLS[tag]||'tag-ok'}">[${tag}]</span>`;
+            }
+            terminal.scrollTop = terminal.scrollHeight;
+            resolve(el);
+          }
+        };
+        tick();
+      });
+    }
+
+    const TW = (cls, text, tag) => typewriteLine(cls, text, tag);
+
+    // ── boot sequence (~3-4s on fast, ~6s on slow) ────────────────
+    async function boot() {
+      await W(200);
+
+      await TW('g', '> INITIALIZING GITHUB-CLUB SYSTEMS...');
+      await W(150);
+      await TW('g', '> CHECKING ENVIRONMENT', 'OK');
+      await W(150);
+
+      if (profile === 'slow') {
+        await TW('w', '> WARN: slow connection detected', 'WARN');
+        await W(150);
+      }
+
+      blank();
+
+      await TW('g', '> git clone https://github.com/githubclub-sithyd/site.git');
+      await W(80);
+      printInstant('m', `  Receiving objects: 100% (187/187) | ${speedLabel}`);
+      await W(200);
+      await TW('g', '> REPOSITORY CLONED', 'OK');
+      blank();
+
+      await TW('g', '> npm install');
+      await W(80);
+      printInstant('m', '  npm warn deprecated glob@7.2.3');
+      await W(profile === 'slow' ? 800 : 400);
+      printInstant('m', '  added 341 packages in ' + (profile==='slow'?'12s':profile==='medium'?'7s':'4s'));
+      await W(150);
+      await TW('g', '> DEPENDENCIES INSTALLED', 'OK');
+      blank();
+
+      await TW('g', '> npm run build');
+      await W(profile === 'slow' ? 600 : 300);
+      printInstant('g', '  ✓ 61 modules transformed.');
+      printInstant('m', '  dist/assets/index.js   158.3 kB │ gzip: 51.2 kB');
+      await W(200);
+      await TW('g', '> BUILD COMPLETE', 'OK');
+      blank();
+
+      await TW('g', '> node server.js --port 3000');
+      await W(200);
+      printInstant('w', "  Error: ENOENT: './assets/image/GitHub_Club.jpg'");
+      await W(100);
+      await TW('w', '> SERVER START', 'FAILED');
+      blank();
+
+      await TW('g', '> git add . && git commit -m "fix: missing assets"');
+      await W(100);
+      printInstant('m', '  [main 4e7c3a1] fix: missing assets — 1 file changed');
+      await W(100);
+      await TW('g', '> git push origin main');
+      await W(profile === 'slow' ? 500 : 200);
+      printInstant('g', '  main -> main ✓');
+      await W(150);
+      await TW('g', '> PUSH SUCCESSFUL', 'OK');
+      blank();
+
+      await TW('g', '> vercel --prod');
+      await W(profile === 'slow' ? 600 : 300);
+      printInstant('g', '  ✓ Production: https://githubclub-sithyd.vercel.app');
+      await W(200);
+      await TW('g', '> DEPLOYMENT SUCCESSFUL', 'DONE');
+      await W(150);
+      await TW('g', '> ALL SYSTEMS NOMINAL', 'OK');
+      blank();
+
+      // countdown + redirect
+      const el = createLine('g');
+      const cur = document.createElement('span');
+      cur.className = 'cursor';
+
+      let count = 3;
+      const countdown = async () => {
+        el.innerHTML = `> LAUNCHING SITE IN ${count}... `;
+        el.appendChild(cur);
+        terminal.scrollTop = terminal.scrollHeight;
+        if (count === 0) {
+          el.innerHTML = '> REDIRECTING...';
+          await wait(400);
+          // Set flag so index.html knows we came from loader and won't loop
+          sessionStorage.setItem(LOADED_KEY, '1');
+          window.location.replace('index.html');
+        } else {
+          count--;
+          await wait(800);
+          await countdown();
+        }
+      };
+      await countdown();
+    }
+
+    boot();
+  })();
+  </script>
+</body>
+</html>

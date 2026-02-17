@@ -1,0 +1,367 @@
+/* About Page Specific Styles */
+
+/* Mission section styling */
+.mission-section p {
+    line-height: 1.8;
+    margin-bottom: 1rem;
+}
+
+.mission-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(360px, 560px);
+    gap: 1.5rem;
+    align-items: stretch;
+}
+
+.mission-side {
+    display: grid;
+    grid-template-rows: auto auto;
+    gap: 0.75rem;
+    align-items: center;
+    justify-items: center;
+    height: 100%;
+}
+
+.mission-social {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    margin-top: 0.75rem;
+}
+
+.link-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--ghborder);
+    color: #ffffff;
+    text-decoration: none;
+    transition: transform 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.link-icon:hover {
+    transform: translateY(-2px);
+    border-color: var(--ghgreen);
+    color: var(--ghgreen);
+    box-shadow:
+        0 0 8px rgba(57, 211, 83, 0.65),
+        0 0 18px rgba(57, 211, 83, 0.45),
+        inset 0 0 8px rgba(57, 211, 83, 0.25);
+    text-shadow: 0 0 8px rgba(57, 211, 83, 0.9);
+}
+
+.social-link {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.6rem 1.25rem;
+    background: var(--ghpanel);
+    border: 1px solid var(--ghborder);
+    border-radius: 8px;
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+.social-link:hover {
+    background: rgba(57, 211, 83, 0.1);
+    border-color: var(--ghgreen);
+    color: var(--ghgreen);
+    transform: translateY(-2px);
+}
+
+.social-link i {
+    color: var(--ghgreen);
+}
+
+.institute-address {
+    white-space: pre-line;
+}
+
+/* Leadership cards: square + flip */
+.leadership-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1rem;
+}
+
+.leader-card {
+    aspect-ratio: 1 / 1;
+    perspective: 1600px;
+    cursor: pointer;
+    transform: translateZ(0);
+    isolation: isolate;
+    width: 100%;
+}
+
+.leadership-grid .leader-card:last-child {
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: min(100%, 320px);
+}
+
+.leader-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.52s cubic-bezier(0.22, 0.61, 0.36, 1);
+    will-change: transform;
+}
+
+.leader-card.is-flipped .leader-card-inner,
+.leader-card:focus-visible .leader-card-inner,
+.leader-card:focus-within .leader-card-inner {
+    transform: rotateY(180deg);
+}
+
+.leader-face {
+    position: absolute;
+    inset: 0;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+    border-radius: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0.75rem;
+}
+
+.leader-front {
+    transform: rotateY(0deg) translateZ(1px);
+    border: 1px solid var(--ghborder);
+}
+
+.leader-back {
+    transform: rotateY(180deg) translateZ(1px);
+    border: 1px solid rgba(57, 211, 83, 0.35);
+}
+
+/* Neutralize global .event-card hover transform/transition on flip faces */
+.leader-face.event-card {
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.leader-face.event-card:hover {
+    transform: none;
+}
+
+.leader-front.event-card:hover {
+    transform: rotateY(0deg) translateZ(1px);
+}
+
+.leader-back.event-card:hover {
+    transform: rotateY(180deg) translateZ(1px);
+}
+
+.leader-icon {
+    width: 65%;
+    aspect-ratio: 1 / 1;
+    border-radius: 999px;
+    border: 1px solid rgba(57, 211, 83, 0.3);
+    color: var(--ghgreen);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.6rem;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+}
+
+.leader-title {
+    font-size: 1.35rem;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+}
+
+.leader-name {
+    font-size: clamp(0.9rem, 1.4vw, 1.02rem);
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}
+
+/* What We Do cards: larger structured grid */
+.what-we-do-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+}
+
+.what-we-do-grid .event-card {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Smooth fade-in animation for cards */
+.fade-in-card {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.join-section {
+    width: 100%;
+    text-align: left;
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(320px, 520px);
+    gap: 1.5rem;
+    align-items: start;
+}
+
+.join-info {
+    width: 100%;
+}
+
+.join-map-wrap {
+    width: 100%;
+    border: 1px solid var(--ghborder);
+    border-radius: 10px;
+    overflow: hidden;
+    min-height: 320px;
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.join-contact {
+    padding: 0.9rem 1rem;
+    border-bottom: 1px solid var(--ghborder);
+    background: rgba(1, 4, 9, 0.8);
+}
+
+.join-map-wrap iframe {
+    display: block;
+    width: 100%;
+    min-height: 320px;
+    border: 0;
+}
+
+.join-cta-wrap {
+    display: flex;
+    justify-content: flex-start;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+    .mission-layout {
+        grid-template-columns: 1fr 400px;
+    }
+
+    .leadership-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .join-section {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .mission-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .mission-side {
+        grid-template-rows: auto auto;
+        margin-top: 0;
+        height: auto;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+    }
+
+    h2 {
+        font-size: 1.75rem;
+    }
+
+    .leadership-grid {
+        grid-template-columns: 1fr;
+        max-width: 420px;
+        margin: 0 auto;
+    }
+
+    .social-link {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .what-we-do-grid {
+        grid-template-columns: 1fr;
+        max-width: 480px;
+        margin: 0 auto;
+    }
+
+    .join-section {
+        grid-template-columns: 1fr;
+        padding: 0;
+    }
+
+    .join-map-wrap {
+        min-height: 280px;
+    }
+
+    .join-map-wrap iframe {
+        min-height: 280px;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 2rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    .mission-section p,
+    .join-section p {
+        font-size: 16px;
+    }
+
+    .social-link {
+        padding: 0.5rem 1rem;
+        font-size: 14px;
+    }
+
+    .social-link i {
+        font-size: 1.25rem;
+    }
+}
+
+.mission-logo {
+    width: min(100%, 460px);
+    aspect-ratio: 1 / 1;
+    max-width: 100%;
+    height: auto;
+    object-fit: cover;
+    filter: none;
+    border-radius: 50%;
+    border-width: initial;
+    border-style: none;
+    border-color: initial;
+    border-image: initial;
+}

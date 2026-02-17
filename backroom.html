@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merge Conflict Simulator | Backroom</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/backroom.css">
+</head>
+<body>
+    <div class="crt-overlay"></div>
+    
+    <!-- Main Container -->
+    <div id="game-container">
+        
+        <!-- Header -->
+        <header class="terminal-header">
+            <div class="header-left">
+                <span class="prompt">git@backroom:~$</span>
+                <span class="blinking-cursor">_</span>
+            </div>
+            <div class="header-right">
+                <a href="index.html" class="exit-btn">[EXIT]</a>
+            </div>
+        </header>
+
+        <!-- Stats Bar -->
+        <div class="stats-bar">
+            <div class="stat">
+                <span class="stat-label">STREAK:</span>
+                <span id="streak-count" class="stat-value">0</span>
+            </div>
+            <div class="stat">
+                <span class="stat-label">TOTAL:</span>
+                <span id="total-count" class="stat-value">0</span>
+            </div>
+            <div class="stat">
+                <span class="stat-label">LEVEL:</span>
+                <span id="level-count" class="stat-value">1</span>
+            </div>
+            <div class="stat stability">
+                <span class="stat-label">STABILITY:</span>
+                <div class="stability-bar">
+                    <div id="stability-fill" class="stability-fill"></div>
+                </div>
+                <span id="stability-value" class="stat-value">100%</span>
+            </div>
+        </div>
+
+        <!-- Main Game Area -->
+        <main id="game-main">
+            
+            <!-- Start Screen -->
+            <div id="start-screen" class="screen active">
+                <div class="terminal-box">
+                    <h1 class="glitch-text" data-text="MERGE CONFLICT SIMULATOR">MERGE CONFLICT SIMULATOR</h1>
+                    <p class="subtitle">// Welcome to the Backroom, Developer</p>
+                    
+                    <div class="intro-text">
+                        <p>You've proven yourself worthy. Now face the ultimate test:</p>
+                        <p>Resolve procedurally generated merge conflicts.</p>
+                        <p>Every conflict is unique. Every decision matters.</p>
+                        <p>System stability decreases with each mistake.</p>
+                        <p class="warning">At 0% stability, it's GAME OVER.</p>
+                        <p class="warning">Analyze the conflict.</p>
+                        <p class="warning">Choose the correct final version.</p>
+                        <p class="warning">Preserve functionality.</p>
+                        <p class="warning">Incorrect merges reduce stability.</p>
+                        <p class="warning">Stability at 0% = system crash.</p>
+                        <p class="warning">Every 10 merges increases complexity.</p>
+                    </div>
+
+                    <button id="start-game-btn" class="btn-terminal">START SIMULATION</button>
+                    <button id="show-manual-btn" class="btn-terminal secondary">VIEW GIT MANUAL</button>
+                </div>
+            </div>
+
+            <!-- Game Screen -->
+            <div id="game-screen" class="screen">
+                <div class="conflict-info">
+                    <div class="info-item">
+                        <span class="label">FILE:</span>
+                        <span id="file-name" class="value">loading...</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">CONFLICT TYPE:</span>
+                        <span id="conflict-type" class="value">BASIC</span>
+                    </div>
+                </div>
+
+                <div class="conflict-display">
+                    <pre id="conflict-code" class="code-block"></pre>
+                </div>
+
+                <div class="resolution-options">
+                    <h3 class="options-title">SELECT RESOLUTION:</h3>
+                    <div id="options-container"></div>
+                </div>
+
+                <div class="action-buttons">
+                    <button id="skip-btn" class="btn-terminal secondary small">SKIP (-5 STABILITY)</button>
+                </div>
+            </div>
+
+            <!-- Result Screen -->
+            <div id="result-screen" class="screen">
+                <div class="result-box">
+                    <div id="result-icon" class="result-icon"></div>
+                    <h2 id="result-title" class="result-title"></h2>
+                    <p id="result-message" class="result-message"></p>
+                    <button id="next-conflict-btn" class="btn-terminal">NEXT CONFLICT</button>
+                </div>
+            </div>
+
+            <!-- Game Over Screen -->
+            <div id="gameover-screen" class="screen">
+                <div class="terminal-box">
+                    <h1 class="glitch-text gameover" data-text="SYSTEM FAILURE">SYSTEM FAILURE</h1>
+                    <p class="subtitle error">// Stability Critical - System Compromised</p>
+                    
+                    <div class="gameover-stats">
+                        <p>Total Conflicts Resolved: <span id="final-total" class="highlight">0</span></p>
+                        <p>Best Streak: <span id="final-streak" class="highlight">0</span></p>
+                        <p>Level Reached: <span id="final-level" class="highlight">1</span></p>
+                    </div>
+
+                    <button id="restart-btn" class="btn-terminal">RESTART SIMULATION</button>
+                    <button id="return-home-btn" class="btn-terminal secondary">RETURN HOME</button>
+                </div>
+            </div>
+
+            <!-- Manual Screen -->
+            <div id="manual-screen" class="screen">
+                <div class="manual-container">
+                    <h2 class="manual-title">GIT COMMAND REFERENCE</h2>
+                    
+                    <div class="manual-section">
+                        <h3>SETUP & HELP</h3>
+                        <div class="cmd-entry">
+                            <code>git config --global user.name "Name"</code>
+                            <p>Set your global Git author name</p>
+                        </div>
+                        <div class="cmd-entry">
+                            <code>git config --global user.email "you@email.com"</code>
+                            <p>Set your global Git email</p>
+                        </div>
+                        <div class="cmd-entry">
+                            <code>git help &lt;command&gt;</code>
+                            <p>Open help for a specific command</p>
+                        </div>
+                    </div>
+
+                    <div class="manual-section">
+                        <h3>REPO BASICS</h3>
+                        <div class="cmd-entry">
+                            <code>git init</code>
+                            <p>Initialize a new repository</p>
+                        </div>
+                        <div class="cmd-entry">
+                            <code>git clone &lt;url&gt;</code>
+                            <p>Clone a remote repository</p>
+                        </div>
+                        <div class="cmd-entry">
+                            <code>git status</code>
+                            <p>Show working tree status</p>
+                        </div>
+                        <div class="cmd-entry">
+                            <code>git add &lt;file&gt;</code>
+                            <p>Stage changes for commit</p>
+                        </div>
+                        <div class="cmd-entry">
+                            <code>git commit -m "message"</code>
+                            <p>Commit staged changes with a message</p>
+                        </div>
+                    </div>
+
+                    <div class="manual-section">
+                        <h3>BRANCHING</h3>
+                        <div class="cmd-entry">
+                            <code>git branch</code>
+                            <p>List local branches</p>
+                        </div>
+                        <div class="cmd-entry">
+                            <code>git branch &lt;name&gt;</code>
+                            <p>Create a new branch</p>
+                        </div>
+                        <div class="cmd-entry">
+                            <code>git switch &lt;name&gt;</code>
+                            <p>Switch to another branch</p>
+                        </div>
+                        <div class="cmd-entry">
+                            <code>git switch -c &lt;name&gt;</code>
+                            <p>Create and switch to a new branch</p>
+                        </div>
+                        <div class="cmd-entry">
+                            <code>git checkout &lt;name&gt;</code>
+                            <p>Legacy branch switch command</p>
+                        </div>
+                    </div>
+
+                    <div class="manual-section">
+                        <h3>SYNC WITH REMOTE</h3>
+                        <div class="cmd-entry">
+                            <code>git remote -v</code>
+                            <p>List remotes and their URLs</p>
+                        </div>
+                        <div class="cmd-entry">
+                            <code>git fetch</code>
+                            <p>Download remote updates without merging</p>
+                        </div>
+                        <div class="cmd-entry">
+                            <code>git pull</code>
+                            <p>Fetch and merge remote changes</p>
+                        </div>
+                        <div class="cmd-entry">
+                            <code>git push</code>
+                            <p>Push local commits to remote</p>
+                        </div>
+                    </div>
+
+                    <div class="manual-section">
+                        <h3>HISTORY & INSPECTION</h3>
+                        <div class="cmd-entry">
+                            <code>git log</code>
+                            <p>Show commit history</p>
+                        </div>
+                        <div class="cmd-entry">
+                            <code>git log --oneline --graph --decorate</code>
+                            <p>Compact history with branch graph</p>
+                        </div>
+                        <div class="cmd-entry">
+                            <code>git diff</code>
+                            <p>Show changes not yet staged</p>
+                        </div>
+                        <div class="cmd-entry">
+                            <code>git diff --staged</code>
+                            <p>Show staged changes</p>
+                        </div>
+                        <div class="cmd-entry">
+                            <code>git show &lt;commit&gt;</code>
+                            <p>Show details for a specific commit</p>
+                        </div>
+                    </div>
+
+                    <div class="manual-section">
+                        <h3>UNDO & FIX</h3>
+                        <div class="cmd-entry">
+                            <code>git restore &lt;file&gt;</code>
+                            <p>Discard changes in working tree</p>
+                        </div>
+                        <div class="cmd-entry">
+                            <code>git restore --staged &lt;file&gt;</code>
+                            <p>Unstage a file</p>
+                        </div>
+                        <div class="cmd-entry">
+                            <code>git reset --soft HEAD~1</code>
+                            <p>Undo last commit, keep changes staged</p>
+                        </div>
+                        <div class="cmd-entry">
+                            <code>git reset --hard HEAD~1</code>
+                            <p>Undo last commit and discard changes</p>
+                        </div>
+                        <div class="cmd-entry">
+                            <code>git revert &lt;commit&gt;</code>
+                            <p>Create a new commit that reverses changes</p>
+                        </div>
+                    </div>
+
+                    <div class="manual-section">
+                        <h3>MERGE & CONFLICT RESOLUTION</h3>
+                        <div class="cmd-entry">
+                            <code>git merge &lt;branch&gt;</code>
+                            <p>Merge specified branch into current branch</p>
+                        </div>
+                        <div class="cmd-entry">
+                            <code>git merge --abort</code>
+                            <p>Abort the merge and return to pre-merge state</p>
+                        </div>
+                        <div class="cmd-entry">
+                            <code>git merge --continue</code>
+                            <p>Continue merge after resolving conflicts</p>
+                        </div>
+                        <div class="cmd-entry">
+                            <code>git mergetool</code>
+                            <p>Launch visual merge tool</p>
+                        </div>
+                        <div class="cmd-entry">
+                            <code>git checkout --ours &lt;file&gt;</code>
+                            <p>Accept current branch version</p>
+                        </div>
+                        <div class="cmd-entry">
+                            <code>git checkout --theirs &lt;file&gt;</code>
+                            <p>Accept incoming branch version</p>
+                        </div>
+                        <div class="cmd-entry">
+                            <code>git add &lt;file&gt;</code>
+                            <p>Mark conflict as resolved</p>
+                        </div>
+                        <div class="cmd-entry">
+                            <code>git log --merge</code>
+                            <p>Show commits that caused the conflict</p>
+                        </div>
+                    </div>
+
+                    <div class="manual-section">
+                        <h3>STASH & CLEANUP</h3>
+                        <div class="cmd-entry">
+                            <code>git stash</code>
+                            <p>Temporarily save uncommitted changes</p>
+                        </div>
+                        <div class="cmd-entry">
+                            <code>git stash list</code>
+                            <p>List saved stashes</p>
+                        </div>
+                        <div class="cmd-entry">
+                            <code>git stash pop</code>
+                            <p>Apply and remove latest stash</p>
+                        </div>
+                        <div class="cmd-entry">
+                            <code>git clean -fd</code>
+                            <p>Remove untracked files and folders</p>
+                        </div>
+                    </div>
+
+                    <div class="manual-section">
+                        <h3>TAGS & RELEASES</h3>
+                        <div class="cmd-entry">
+                            <code>git tag</code>
+                            <p>List tags</p>
+                        </div>
+                        <div class="cmd-entry">
+                            <code>git tag -a v1.0.0 -m "release"</code>
+                            <p>Create an annotated tag</p>
+                        </div>
+                        <div class="cmd-entry">
+                            <code>git push --tags</code>
+                            <p>Push tags to remote</p>
+                        </div>
+                    </div>
+
+                    <button id="close-manual-btn" class="btn-terminal">CLOSE MANUAL</button>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- Footer -->
+        <footer class="terminal-footer">
+            <span>© 2026 GitHub Club · SIT-H</span>
+            <span class="separator">·</span>
+            <span>Backroom Access Granted</span>
+        </footer>
+
+    </div>
+
+    <script src="js/backroom.js"></script>
+</body>
+</html>
+

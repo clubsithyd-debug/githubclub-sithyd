@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About | GitHub Club</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Fira+Code:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/contact.css">
+    <link rel="stylesheet" href="css/about.css">
+</head>
+<body class="bg-ghbg text-ghtext">
+    <!-- Header -->
+    <header class="fixed top-0 w-full z-50 glass">
+        <div class="w-full px-[4vw] h-20 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-3">
+                <img src="./assets/image/GitHub_Club.jpg" class="h-20 w-auto object-contain" alt="GitHub Club Logo">
+                <span class="hidden sm:block font-semibold text-xl">GitHub Club · SIT-H</span>
+            </a>
+            <nav class="flex gap-8 font-mono text-xl font-semibold">
+                <a href="index.html" class="nav-link interactive">~/home</a>
+                <a href="events.html" class="nav-link interactive">~/events</a>
+                <a href="about.html" class="nav-link interactive text-ghgreen">~/about</a>
+                <a href="symbihackathon.html" class="nav-link interactive">~/symbihackathon</a>
+                <a href="contact.html" id="contact-link" data-contact-trigger="true" class="nav-link interactive">~/contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="pt-32 px-[8vw] min-h-screen">
+        
+        <!-- Page Title -->
+        <h1 class="text-5xl font-bold mb-8 mono about-title" style="color: #39d353 !important;">~/about</h1>
+        
+        <!-- Mission + About Institute Section (shared layout) -->
+        <section class="mb-16 mission-section">
+            <div style="display:grid; grid-template-columns: 1fr auto; gap: 3rem; align-items: start;">
+
+                <!-- LEFT: text content -->
+                <div>
+                    <h2 class="text-3xl font-bold mb-6">Our Mission</h2>
+                    <p class="text-ghmuted text-lg mb-4 leading-relaxed">
+                        The GitHub Club at SIT Hyderabad exists to foster a culture of open-source
+                        development, collaboration, and continuous learning among students. We're not
+                        just a club — we're a community of passionate developers, designers, and tech
+                        enthusiasts united by our love for building and learning. We bridge the gap
+                        between classroom theory and industry practice by contributing to real-world
+                        projects that make an impact.
+                    </p>
+
+                    <h2 class="text-3xl font-bold mb-4 mt-10">About the Institute</h2>
+                    <p class="text-lg leading-relaxed" >
+                        Symbiosis Institute of Technology, Hyderabad — the flagship institute of the prestigious 
+                        <strong style="color:#e6edf3;">Symbiosis International (Deemed University)</strong> — is committed 
+                        to delivering quality technical education that keeps pace with industry demands and technological 
+                        advancement, nurturing faculty and students alike in an environment built for innovation, growth, 
+                        and excellence.
+                    </p>
+                </div>
+
+                <!-- RIGHT: logo + social icons -->
+                <aside style="display:flex; flex-direction:column; align-items:center; gap:1.5rem; min-width:320px;">
+                    <img src="./assets/image/GitHub Club.jpg" alt="GitHub Club Logo"
+                         style="width:500px; height:500px; object-fit:cover; border-radius:50%;">
+                    <div style="display:flex; align-items:center; gap:1rem;">
+                        <a href="#" class="link-icon interactive" target="_blank" rel="noopener noreferrer" aria-label="Instagram"
+                           style="width:3.5rem; height:3.5rem; font-size:1.4rem;">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="link-icon interactive" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"
+                           style="width:3.5rem; height:3.5rem; font-size:1.4rem;">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="https://sithyd.edu.in/" class="link-icon interactive" target="_blank" rel="noopener noreferrer" aria-label="SIT Hyderabad"
+                           style="width:3.5rem; height:3.5rem; font-size:1.4rem;">
+                            <i class="fa-solid fa-globe"></i>
+                        </a>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+        <!-- What We Do Section -->
+        <section class="mb-16">
+            <h2 class="text-3xl font-bold mb-6">What We Do</h2>
+            <div class="what-we-do-grid">
+                <div class="event-card interactive rounded-xl p-6">
+                    <div class="mb-4 text-4xl text-ghgreen">
+                        <i class="fa-solid fa-laptop-code"></i>
+                    </div>
+                    <h3 class="font-bold text-xl mb-2 text-ghgreen">Workshops</h3>
+                    <p class="text-ghmuted text-base leading-relaxed">
+                        Regular hands-on sessions covering Git, GitHub, version control, 
+                        and modern development workflows. Learn industry best practices 
+                        through practical exercises.
+                    </p>
+                </div>
+                
+                <div class="event-card interactive rounded-xl p-6">
+                    <div class="mb-4 text-4xl text-ghgreen">
+                        <i class="fa-solid fa-trophy"></i>
+                    </div>
+                    <h3 class="font-bold text-xl mb-2 text-ghgreen">Hackathons</h3>
+                    <p class="text-ghmuted text-base leading-relaxed">
+                        Competitive coding events where creativity meets technical skills. 
+                        Build innovative solutions, collaborate with peers, and win exciting prizes.
+                    </p>
+                </div>
+                
+                <div class="event-card interactive rounded-xl p-6">
+                    <div class="mb-4 text-4xl text-ghgreen">
+                        <i class="fa-solid fa-code-branch"></i>
+                    </div>
+                    <h3 class="font-bold text-xl mb-2 text-ghgreen">Open Source</h3>
+                    <p class="text-ghmuted text-base leading-relaxed">
+                        Contributing to real-world open-source projects. Build your portfolio, 
+                        gain experience, and give back to the developer community.
+                    </p>
+                </div>
+                
+                <div class="event-card interactive rounded-xl p-6">
+                    <div class="mb-4 text-4xl text-ghgreen">
+                        <i class="fa-solid fa-people-group"></i>
+                    </div>
+                    <h3 class="font-bold text-xl mb-2 text-ghgreen">Community</h3>
+                    <p class="text-ghmuted text-base leading-relaxed">
+                        Building a supportive network of developers and learners. Peer mentorship, 
+                        project collaborations, and lifelong connections.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Leadership Team Section -->
+        <section class="mb-16">
+            <h2 class="text-3xl font-bold mb-6">Leadership Team</h2>
+            <p class="text-ghmuted text-lg mb-8">
+                Our dedicated team works tirelessly to bring you amazing events and opportunities.
+            </p>
+            
+            <div class="leadership-grid">
+                <article class="leader-card interactive" tabindex="0" role="button" aria-label="Flip Chairperson card">
+                    <div class="leader-card-inner">
+                        <div class="leader-face leader-front event-card">
+                            <div class="leader-icon">Chair</div>
+                            <h3 class="leader-title">Chairperson</h3>
+                            <p class="leader-name">Md Zakiur Rahman</p>
+                        </div>
+                        <div class="leader-face leader-back event-card">
+                            <p class="text-ghmuted mb-3">LinkedIn</p>
+                            <a href="#" class="social-link interactive" target="_blank" rel="noopener noreferrer">Open Profile</a>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="leader-card interactive" tabindex="0" role="button" aria-label="Flip Vice Chairperson card">
+                    <div class="leader-card-inner">
+                        <div class="leader-face leader-front event-card">
+                            <div class="leader-icon">Vice</div>
+                            <h3 class="leader-title">Vice Chairperson</h3>
+                            <p class="leader-name">Coming Soon</p>
+                        </div>
+                        <div class="leader-face leader-back event-card">
+                            <p class="text-ghmuted mb-3">LinkedIn</p>
+                            <a href="#" class="social-link interactive" target="_blank" rel="noopener noreferrer">Open Profile</a>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="leader-card interactive" tabindex="0" role="button" aria-label="Flip Treasurer card">
+                    <div class="leader-card-inner">
+                        <div class="leader-face leader-front event-card">
+                            <div class="leader-icon">Cash</div>
+                            <h3 class="leader-title">Treasurer</h3>
+                            <p class="leader-name">Coming Soon</p>
+                        </div>
+                        <div class="leader-face leader-back event-card">
+                            <p class="text-ghmuted mb-3">LinkedIn</p>
+                            <a href="#" class="social-link interactive" target="_blank" rel="noopener noreferrer">Open Profile</a>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="leader-card interactive" tabindex="0" role="button" aria-label="Flip Secretary card">
+                    <div class="leader-card-inner">
+                        <div class="leader-face leader-front event-card">
+                            <div class="leader-icon">Notes</div>
+                            <h3 class="leader-title">Secretary</h3>
+                            <p class="leader-name">Coming Soon</p>
+                        </div>
+                        <div class="leader-face leader-back event-card">
+                            <p class="text-ghmuted mb-3">LinkedIn</p>
+                            <a href="#" class="social-link interactive" target="_blank" rel="noopener noreferrer">Open Profile</a>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="leader-card interactive" tabindex="0" role="button" aria-label="Flip Content Developer card">
+                    <div class="leader-card-inner">
+                        <div class="leader-face leader-front event-card">
+                            <div class="leader-icon">Create</div>
+                            <h3 class="leader-title">Content Developer</h3>
+                            <p class="leader-name">Coming Soon</p>
+                        </div>
+                        <div class="leader-face leader-back event-card">
+                            <p class="text-ghmuted mb-3">LinkedIn</p>
+                            <a href="#" class="social-link interactive" target="_blank" rel="noopener noreferrer">Open Profile</a>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="leader-card interactive" tabindex="0" role="button" aria-label="Flip Executive Member card">
+                    <div class="leader-card-inner">
+                        <div class="leader-face leader-front event-card">
+                            <div class="leader-icon">Exec</div>
+                            <h3 class="leader-title">Executive Member</h3>
+                            <p class="leader-name">Coming Soon</p>
+                        </div>
+                        <div class="leader-face leader-back event-card">
+                            <p class="text-ghmuted mb-3">LinkedIn</p>
+                            <a href="#" class="social-link interactive" target="_blank" rel="noopener noreferrer">Open Profile</a>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="leader-card faculty-card interactive" tabindex="0" role="button" aria-label="Flip Faculty In-Charge card">
+                    <div class="leader-card-inner">
+                        <div class="leader-face leader-front event-card">
+                            <div class="leader-icon">Faculty</div>
+                            <h3 class="leader-title">Faculty In-Charge</h3>
+                            <p class="leader-name">Coming Soon</p>
+                        </div>
+                        <div class="leader-face leader-back event-card">
+                            <p class="text-ghmuted mb-3">LinkedIn</p>
+                            <a href="#" class="social-link interactive" target="_blank" rel="noopener noreferrer">Open Profile</a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- Join Us Section -->
+        <section class="mb-16">
+            <h2 class="text-3xl font-bold mb-6">Join Us</h2>
+            <div class="join-section">
+                <div class="join-info">
+                    <p class="text-ghmuted text-lg mb-4 leading-relaxed">
+                        Whether you're a complete beginner taking your first steps in coding, or an
+                        experienced developer looking to contribute to open source, there's a place for
+                        you in our community.
+                    </p>
+                    <p class="text-ghmuted text-lg mb-6 leading-relaxed">
+                        We welcome students from all departments and skill levels. Join us at our next
+                        event and become part of something bigger!
+                    </p>
+                    <div class="flex flex-wrap gap-4 join-cta-wrap">
+                        <a href="events.html" class="btn-primary interactive px-6 py-3 rounded-full font-bold">
+                            Upcoming Events
+                        </a>
+                        <a href="contact.html" class="btn-secondary interactive px-6 py-3 rounded-full font-bold">
+                            Contact Us
+                        </a>
+                    </div>
+                </div>
+                <div class="join-map-wrap">
+                    <div class="join-contact">
+                        <h4 class="text-lg font-bold mb-2">Institute Address</h4>
+                        <p class="text-ghmuted text-sm leading-relaxed institute-address">
+                            Survey Number 292, Off Bangalore Highway, Modallaguda (V), Nandigama (M),
+                            Rangareddy Dist, Hyderabad, Telangana, India, Pin Code: 509217
+                        </p>
+                    </div>
+                    <iframe
+                        title="SIT Hyderabad Location"
+                        src="https://www.google.com/maps?q=Survey%20Number%20292,%20Off%20Bangalore%20Highway,%20Modallaguda%20(V),%20Nandigama%20(M),%20Rangareddy%20Dist,%20Hyderabad,%20Telangana%20509217&output=embed"
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"
+                        allowfullscreen
+                    ></iframe>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-ghborder py-12 text-center text-sm text-ghmuted">
+    <div class="flex justify-center items-center gap-6 mb-4 font-mono">
+         <p>© 2026 GitHub Club · SIT Hyderabad</p>
+    </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/index.js"></script>
+    <script src="js/about.js"></script>
+<!-- Contact Modal -->
+
+
+
+    <script src="js/contact-modal.js"></script>
+</body>
+</html>

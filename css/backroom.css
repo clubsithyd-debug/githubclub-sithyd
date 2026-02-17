@@ -1,0 +1,793 @@
+/* ===============================
+   BACKROOM - MERGE CONFLICT SIMULATOR
+   Terminal-styled game with CRT effects
+   =============================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg-primary: #010409;
+    --terminal-green: #39d353;
+    --terminal-green-dim: #26a641;
+    --terminal-red: #f85149;
+    --text-primary: #c9d1d9;
+    --text-muted: #b7c0c8;
+    --border-color: #30363d;
+    --panel-bg: #0d1117;
+}
+
+body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: 'Fira Code', monospace;
+    overflow-x: hidden;
+    position: relative;
+    font-size: 18px; /* Increased from 16px */
+}
+
+/* ===============================
+   CRT OVERLAY EFFECT
+   =============================== */
+
+.crt-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9999;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.15),
+        rgba(0, 0, 0, 0.15) 1px,
+        transparent 1px,
+        transparent 2px
+    );
+    animation: scanlines 8s linear infinite;
+    opacity: 0.2;
+}
+
+@keyframes scanlines {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(10px); }
+}
+
+/* Subtle flicker */
+@keyframes flicker {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.98; }
+}
+
+#game-container {
+    animation: flicker 3s infinite;
+}
+
+/* ===============================
+   LAYOUT
+   =============================== */
+
+#game-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* ===============================
+   HEADER
+   =============================== */
+
+.terminal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background: var(--panel-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.prompt {
+    color: var(--terminal-green);
+    font-weight: bold;
+    font-size: 18px; /* Increased */
+}
+
+.blinking-cursor {
+    color: var(--terminal-green);
+    animation: blink 1s step-end infinite;
+    font-size: 18px; /* Increased */
+}
+
+@keyframes blink {
+    50% { opacity: 0; }
+}
+
+.exit-btn {
+    color: var(--terminal-red);
+    text-decoration: none;
+    font-size: 16px; /* Increased from 14px */
+    font-weight: bold;
+    padding: 5px 10px;
+    border: 1px solid var(--terminal-red);
+    border-radius: 3px;
+    transition: all 0.2s;
+}
+
+.exit-btn:hover {
+    background: var(--terminal-red);
+    color: var(--bg-primary);
+}
+
+/* ===============================
+   STATS BAR
+   =============================== */
+
+.stats-bar {
+    display: flex;
+    gap: 20px;
+    padding: 15px 20px;
+    background: var(--panel-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.stat {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.stat-label {
+    color: var(--text-muted);
+    font-size: 14px; /* Increased from 12px */
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+}
+
+.stat-value {
+    color: var(--terminal-green);
+    font-weight: bold;
+    font-size: 18px; /* Increased from 16px */
+}
+
+.stability {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.stability-bar {
+    width: 150px;
+    height: 20px;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.stability-fill {
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(90deg, var(--terminal-green), var(--terminal-green-dim));
+    transition: width 0.5s ease, background 0.3s;
+}
+
+.stability-fill.warning {
+    background: linear-gradient(90deg, #f0883e, #db6d28);
+}
+
+.stability-fill.critical {
+    background: linear-gradient(90deg, var(--terminal-red), #da3633);
+}
+
+/* ===============================
+   MAIN GAME AREA
+   =============================== */
+
+#game-main {
+    flex: 1;
+    background: var(--panel-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    padding: 30px;
+    position: relative;
+    overflow-y: auto;
+}
+
+.screen {
+    display: none;
+}
+
+.screen.active {
+    display: block;
+    animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===============================
+   START SCREEN
+   =============================== */
+
+.terminal-box {
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.glitch-text {
+    font-size: 3.5rem; /* Increased from 3rem */
+    color: var(--terminal-green);
+    font-weight: bold;
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.glitch-text.gameover {
+    color: var(--terminal-red);
+}
+
+.subtitle {
+    color: var(--text-muted);
+    font-size: 16px; /* Increased from 14px */
+    margin-bottom: 30px;
+}
+
+.subtitle.error {
+    color: var(--terminal-red);
+}
+
+.intro-text {
+    text-align: left;
+    margin: 30px 0;
+    line-height: 1.8;
+    font-size: 16px; /* Increased */
+}
+
+.intro-text p {
+    margin-bottom: 10px;
+    color: var(--text-muted);
+    font-size: 16px; /* Increased */
+}
+
+.intro-text .warning {
+    color: var(--terminal-red);
+    font-weight: bold;
+}
+
+/* ===============================
+   BUTTONS
+   =============================== */
+
+.btn-terminal {
+    background: var(--terminal-green);
+    color: var(--bg-primary);
+    border: none;
+    padding: 12px 30px;
+    font-family: 'Fira Code', monospace;
+    font-size: 16px; /* Increased from 14px */
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.2s;
+    text-transform: uppercase;
+    margin: 10px 5px;
+}
+
+.btn-terminal:hover {
+    background: var(--terminal-green-dim);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(57, 211, 83, 0.3);
+}
+
+.btn-terminal.secondary {
+    background: transparent;
+    color: var(--terminal-green);
+    border: 1px solid var(--terminal-green);
+}
+
+.btn-terminal.secondary:hover {
+    background: var(--terminal-green);
+    color: var(--bg-primary);
+}
+
+.btn-terminal.small {
+    padding: 8px 16px;
+    font-size: 12px;
+}
+
+.btn-terminal:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* ===============================
+   GAME SCREEN
+   =============================== */
+
+.conflict-info {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 20px;
+    padding: 15px;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+}
+
+.info-item {
+    display: flex;
+    gap: 10px;
+}
+
+.info-item .label {
+    color: var(--text-muted);
+    font-size: 14px; /* Increased from 12px */
+    font-weight: 600;
+}
+
+.info-item .value {
+    color: var(--terminal-green);
+    font-weight: bold;
+    font-size: 14px; /* Increased from 12px */
+}
+
+.conflict-display {
+    margin-bottom: 30px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.code-block {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    padding: 20px;
+    font-size: 15px; /* Increased from 13px */
+    line-height: 1.8; /* Increased from 1.6 */
+    color: var(--text-primary);
+    overflow-x: auto;
+}
+
+.code-block .conflict-head {
+    color: #39d353;
+}
+
+.code-block .conflict-sep {
+    color: var(--text-muted);
+}
+
+.code-block .conflict-incoming {
+    color: #f0883e;
+}
+
+.resolution-options {
+    margin-bottom: 20px;
+}
+
+.options-title {
+    color: var(--terminal-green);
+    font-size: 16px; /* Increased from 14px */
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+}
+
+#options-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.option-btn {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    padding: 15px;
+    text-align: left;
+    color: var(--text-primary);
+    font-family: 'Fira Code', monospace;
+    font-size: 15px; /* Increased from 13px */
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.2s;
+}
+
+.option-btn:hover {
+    border-color: var(--terminal-green);
+    background: rgba(57, 211, 83, 0.05);
+}
+
+.option-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+/* ===============================
+   RESULT SCREEN
+   =============================== */
+
+.result-box {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.result-icon {
+    font-size: 80px;
+    margin-bottom: 20px;
+}
+
+.result-icon.success::before {
+    content: '\\2713';
+    color: var(--terminal-green);
+}
+
+.result-icon.failure::before {
+    content: '\\2715';
+    color: var(--terminal-red);
+}
+
+.result-title {
+    font-size: 3rem; /* Increased from 2.5rem */
+    margin-bottom: 15px;
+}
+
+.result-title.success {
+    color: var(--terminal-green);
+}
+
+.result-title.failure {
+    color: var(--terminal-red);
+}
+
+.result-message {
+    color: var(--text-muted);
+    font-size: 18px; /* Increased from 16px */
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+
+/* ===============================
+   GAME OVER
+   =============================== */
+
+.gameover-stats {
+    margin: 30px 0;
+    text-align: left;
+}
+
+.gameover-stats p {
+    margin-bottom: 15px;
+    color: var(--text-muted);
+    font-size: 18px; /* Increased from 16px */
+}
+
+.gameover-stats .highlight {
+    color: var(--terminal-green);
+    font-weight: bold;
+    font-size: 22px; /* Increased from 20px */
+}
+
+/* ===============================
+   MANUAL SCREEN
+   =============================== */
+
+.manual-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.manual-title {
+    text-align: center;
+    color: var(--terminal-green);
+    font-size: 2.4rem;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.manual-section {
+    margin-bottom: 40px;
+}
+
+.manual-section h3 {
+    color: var(--terminal-green);
+    font-size: 1.35rem;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.cmd-entry {
+    margin-bottom: 20px;
+    padding: 15px;
+    background: rgba(1, 4, 9, 0.6);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+}
+
+.cmd-entry code {
+    display: block;
+    color: var(--terminal-green);
+    font-size: 18px;
+    margin-bottom: 8px;
+}
+
+.cmd-entry p {
+    color: var(--text-primary);
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+/* ===============================
+   FOOTER
+   =============================== */
+
+.terminal-footer {
+    margin-top: 20px;
+    padding: 15px 20px;
+    background: var(--panel-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    text-align: center;
+    font-size: 14px;
+    color: var(--text-primary);
+}
+
+.separator {
+    margin: 0 10px;
+}
+
+/* ===============================
+   ANIMATIONS
+   =============================== */
+
+@keyframes glitch {
+    0% {
+        transform: translate(0);
+    }
+    20% {
+        transform: translate(-2px, 2px);
+    }
+    40% {
+        transform: translate(-2px, -2px);
+    }
+    60% {
+        transform: translate(2px, 2px);
+    }
+    80% {
+        transform: translate(2px, -2px);
+    }
+    100% {
+        transform: translate(0);
+    }
+}
+
+.glitch-effect {
+    animation: glitch 0.3s;
+}
+
+/* ===============================
+   RESPONSIVE
+   =============================== */
+
+/* Tablet */
+@media (max-width: 1024px) {
+    #game-container {
+        padding: 15px;
+    }
+    
+    .glitch-text {
+        font-size: 3rem;
+    }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    #game-container {
+        padding: 10px;
+    }
+
+    .glitch-text {
+        font-size: 2rem;
+    }
+    
+    .terminal-header {
+        padding: 10px;
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: flex-start;
+    }
+    
+    .header-left,
+    .header-right {
+        width: 100%;
+    }
+
+    .stats-bar {
+        flex-direction: column;
+        gap: 10px;
+        padding: 10px;
+    }
+
+    .stability {
+        margin-left: 0;
+        width: 100%;
+    }
+    
+    .stability-bar {
+        width: 100%;
+    }
+
+    .conflict-info {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    #game-main {
+        padding: 15px;
+    }
+    
+    .code-block {
+        font-size: 13px;
+        padding: 15px;
+    }
+    
+    .option-btn {
+        font-size: 14px;
+        padding: 12px;
+    }
+    
+    .btn-terminal {
+        padding: 10px 20px;
+        font-size: 14px;
+        margin: 5px 2px;
+    }
+    
+    .manual-container {
+        padding: 0;
+    }
+    
+    .manual-title {
+        font-size: 1.5rem;
+    }
+    
+    .cmd-entry code {
+        font-size: 14px;
+    }
+    
+    .cmd-entry p {
+        font-size: 13px;
+    }
+    
+    .result-title {
+        font-size: 2rem;
+    }
+    
+    .result-message {
+        font-size: 16px;
+    }
+    
+    .gameover-stats p {
+        font-size: 16px;
+    }
+    
+    .gameover-stats .highlight {
+        font-size: 20px;
+    }
+    
+    .easter-box {
+        width: 95%;
+        padding: 16px;
+    }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+    body {
+        font-size: 16px;
+    }
+    
+    .glitch-text {
+        font-size: 1.75rem;
+    }
+    
+    .prompt,
+    .blinking-cursor {
+        font-size: 16px;
+    }
+    
+    .exit-btn {
+        font-size: 14px;
+        padding: 4px 8px;
+    }
+    
+    .stat-label {
+        font-size: 11px;
+    }
+    
+    .stat-value {
+        font-size: 14px;
+    }
+    
+    .stats-bar {
+        padding: 8px;
+    }
+    
+    .code-block {
+        font-size: 12px;
+        padding: 12px;
+    }
+    
+    .option-btn {
+        font-size: 13px;
+        padding: 10px;
+    }
+    
+    .btn-terminal {
+        padding: 8px 16px;
+        font-size: 13px;
+    }
+    
+    .intro-text,
+    .intro-text p {
+        font-size: 14px;
+    }
+}
+
+/* ===============================
+   SCROLLBAR
+   =============================== */
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--terminal-green);
+}

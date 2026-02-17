@@ -1,0 +1,666 @@
+/* ===============================
+   GLOBAL BASE
+   =============================== */
+
+html,
+body {
+  background-color: #010409;
+  font-size: 17px;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+:root {
+  --ghbg: #010409;
+  --ghpanel: #0d1117;
+  --ghpanel-soft: rgba(255,255,255,0.03);
+  --ghtext: #c9d1d9;
+  --ghmuted: #8b949e;
+  --ghgreen: #39d353;
+  --ghgreen-dim: #26a641;
+  --ghblue: #39d353;
+  --ghborder: #30363d;
+}
+
+* {
+  cursor: auto !important;
+}
+
+body {
+  color: var(--ghtext);
+  line-height: 1.6;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  color: inherit;
+}
+
+
+/* ===============================
+   TYPOGRAPHY
+   =============================== */
+
+h1, h2, h3, h4, h5, h6 {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+p {
+  max-width: 65ch;
+}
+
+/* Links */
+a {
+  color: var(--ghtext);
+  text-decoration: none;
+  position: relative;
+}
+
+a:hover {
+  color: #ffffff;
+}
+
+.hover-underline::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 0;
+  height: 1.5px;
+  background: var(--ghgreen);
+  transition: width 0.2s ease;
+}
+
+.hover-underline:hover::after {
+  width: 100%;
+}
+
+/* ===============================
+   TYPEWRITER
+   =============================== */
+
+.typewrite > .wrap::after {
+  content: "_";
+  margin-left: 4px;
+  color: var(--ghgreen);
+  animation: blink 1s infinite;
+}
+
+/* ===============================
+   NAVBAR
+   =============================== */
+
+.glass {
+  background: rgba(1, 4, 9, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--ghborder);
+}
+
+/* Logo - NO hover effects */
+#logo-container {
+  cursor: none !important;
+}
+
+#logo-container:hover {
+  /* Explicitly prevent any hover effects */
+  transform: none !important;
+  filter: none !important;
+}
+
+/* Navigation Links */
+.nav-link {
+  color: var(--text-primary);
+  text-decoration: none;
+  position: relative;
+  transition: color 0.3s ease;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.nav-link:hover {
+  color: var(--ghgreen) !important;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0;
+  height: 2px;
+  background: var(--ghgreen);
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* ===============================
+   EVENT CARDS
+   =============================== */
+
+#event-card {
+  background: linear-gradient(
+    180deg,
+    rgba(255,255,255,0.04),
+    rgba(255,255,255,0.015)
+  );
+  border: 1px solid var(--ghborder);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.45);
+  transition: all 0.3s ease;
+}
+
+#event-card:hover {
+  border-color: var(--ghblue);
+  transform: translateY(-2px);
+}
+
+.event-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--ghborder);
+  transition: all 0.3s ease;
+}
+
+.event-card:hover {
+  border-color: var(--ghblue);
+  transform: translateY(-5px);
+  background: #161b22;
+}
+
+/* ===============================
+   TIMER
+   =============================== */
+
+#timer {
+  gap: 2.5rem;
+}
+
+#timer span {
+  color: #ffffff;
+  letter-spacing: -0.02em;
+}
+
+/* ===============================
+   BUTTONS
+   =============================== */
+
+.btn-primary {
+  background: var(--ghgreen);
+  color: #000;
+  font-weight: 700;
+  transition: transform 0.15s ease, filter 0.2s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.2);
+}
+
+.btn-secondary {
+  background: transparent;
+  border: 1px solid var(--ghgreen);
+  color: var(--ghgreen);
+  font-weight: 700;
+  transition: all 0.2s ease;
+}
+
+.btn-secondary:hover {
+  background: var(--ghgreen);
+  color: #000;
+  transform: translateY(-1px);
+}
+
+/* ===============================
+   QUOTE
+   =============================== */
+
+blockquote {
+  max-width: 70ch;
+  border-left: 2px solid rgba(255,255,255,0.08);
+  padding-left: 1.25rem;
+}
+/* ===============================
+   EASTER EGG MODAL
+   =============================== */
+
+#easter-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.88);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(6px);
+}
+
+.easter-box {
+  background: var(--ghpanel);
+  padding: 40px;
+  border-radius: 16px;
+  width: 95%;
+  max-width: 680px;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.8);
+  font-family: 'Fira Code', monospace;
+  font-size: 16px;
+  border: 1px solid var(--ghborder);
+  text-align: center;
+}
+
+.easter-box p,
+.easter-box .font-mono,
+.easter-box .text-xs,
+.easter-box .text-sm,
+.easter-box strong {
+  font-size: 16px;
+  line-height: 1.7;
+  margin-bottom: 0.6rem;
+  text-align: center;
+  width: 100%;
+  display: block;
+}
+
+.easter-box .text-xs { font-size: 15px !important; }
+.easter-box .text-sm { font-size: 16px !important; }
+
+/* ===============================
+   COLOR DOORS PUZZLE
+   =============================== */
+
+.doors {
+  display: flex;
+  gap: 18px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.door {
+  width: 150px;
+  aspect-ratio: 1 / 1;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08);
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.door:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.5);
+}
+
+.door::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: inherit;
+  opacity: 0.9;
+}
+
+.door.decoy-blue  { background: blue; }
+.door.decoy-green { background: green; }
+.door.true-red    { background: yellow; }
+
+@keyframes doorShake {
+  0%, 100% { transform: translateX(0); }
+  25%       { transform: translateX(-6px); }
+  75%       { transform: translateX(6px); }
+}
+
+.door.wrong { animation: doorShake 0.4s; }
+
+/* ===============================
+   TERMINAL INPUT
+   =============================== */
+
+.terminal-line {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #010409;
+  padding: 14px 20px;
+  border-radius: 8px;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06);
+  margin-top: 8px;
+  text-align: left;
+}
+
+.prompt {
+  color: var(--ghgreen);
+  font-weight: bold;
+  font-size: 16px;
+}
+
+#cmd-input {
+  background: transparent;
+  border: none;
+  outline: none;
+  width: 100%;
+  font-size: 16px;
+  color: var(--ghtext);
+  font-family: 'Fira Code', monospace;
+  text-align: left;
+}
+
+#cmd-input:focus {
+  box-shadow: inset 0 -1px 0 var(--ghgreen);
+}
+/* ===============================
+   ANIMATIONS
+   =============================== */
+
+.fade-in {
+  animation: fadeIn 0.6s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Matrix Background Animation */
+.matrix-bg {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0.40; /* Kept subtle */
+  z-index: 0;
+}
+
+/* Ensure full visibility for all text and UI elements */
+body, p, span, div, h1, h2, h3, h4, h5, h6, a, button, input, textarea, select {
+    opacity: 1 !important;
+}
+
+/* Exception: Matrix background should stay subtle */
+.matrix-bg {
+    opacity: 0.40 !important;
+}
+
+/* ===============================
+   CONTACT MODAL
+   =============================== */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  backdrop-filter: blur(5px);
+}
+
+.modal-overlay.active {
+  display: flex;
+  animation: fadeIn 0.3s ease;
+}
+
+.modal-content {
+  background: var(--ghpanel);
+  border: 1px solid var(--ghborder);
+  border-radius: 8px;
+  width: 90%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--ghborder);
+}
+
+.modal-header button {
+  background: none;
+  border: none;
+  cursor: none;
+  font-size: 28px;
+  line-height: 1;
+  transition: color 0.2s;
+}
+
+.modal-body {
+  padding: 24px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 12px;
+  background: var(--bg-primary);
+  border: 1px solid var(--ghborder);
+  border-radius: 4px;
+  color: var(--text-primary);
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  transition: border-color 0.2s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--ghgreen);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* 
+  CONTACT FORM IMPLEMENTATION OPTIONS:
+  
+  1. MAILTO (Simplest - No backend required):
+     Uses user's default email client.
+     Not recommended for professional use.
+  
+  2. EMAILJS (Recommended - Free tier available):
+     Add EmailJS library and configure service
+     Example: emailjs.send('service_id', 'template_id', formData)
+  
+  3. BACKEND + DATABASE (Most Professional):
+     POST to /api/contact endpoint
+     Store in database, send confirmation email
+     Requires server setup (Node.js/Express, PHP, etc.)
+*/
+
+/* ===============================
+   UTILITIES
+   =============================== */
+
+.interactive {
+  cursor: pointer !important;
+}
+
+.mono {
+  font-family: 'Fira Code', monospace;
+}
+
+/* ===============================
+   RESPONSIVE DESIGN
+   =============================== */
+
+/* Tablet (768px - 1024px) */
+@media (max-width: 1024px) {
+  #timer {
+    gap: 1.5rem;
+  }
+  
+  #timer span {
+    font-size: 2.5rem;
+  }
+}
+
+/* Mobile (max-width: 768px) */
+@media (max-width: 768px) {
+  /* Typography */
+  h1 {
+    font-size: 2.5rem !important;
+  }
+  
+  h2 {
+    font-size: 1.75rem !important;
+  }
+  
+  /* Navbar */
+  header {
+    height: auto;
+    min-height: 60px;
+  }
+  
+  nav {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: center;
+    padding: 0.5rem 0;
+  }
+  
+  .nav-link {
+    font-size: 14px;
+    padding: 0.25rem 0.5rem;
+  }
+  
+  /* Hero section */
+  section {
+    padding-left: 5vw !important;
+    padding-right: 5vw !important;
+  }
+  
+  /* Timer */
+  #timer {
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  
+  #timer span {
+    font-size: 2rem;
+  }
+  
+  #timer .min-w-\[80px\] {
+    min-width: 60px;
+  }
+  
+  /* Event cards */
+  .event-card {
+    padding: 1rem;
+  }
+  
+  /* Buttons */
+  .btn-primary,
+  .btn-secondary {
+    padding: 0.75rem 1.5rem;
+    font-size: 14px;
+  }
+  
+  /* Modal */
+  .modal-content {
+    width: 95%;
+    margin: 1rem;
+  }
+  
+  .modal-header {
+    padding: 1rem;
+  }
+  
+  .modal-body {
+    padding: 1rem;
+  }
+  
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+  
+  /* Terminal loader */
+  .terminal-window {
+    width: 95%;
+  }
+  
+  #terminal-body {
+    font-size: 11px;
+    padding: 16px;
+  }
+  
+  /* Logo */
+  #logo-container img {
+    height: 1.5rem;
+  }
+  
+  #logo-container span {
+    font-size: 14px;
+  }
+}
+
+/* Small Mobile (max-width: 480px) */
+@media (max-width: 480px) {
+  h1 {
+    font-size: 2rem !important;
+  }
+  
+  h2 {
+    font-size: 1.5rem !important;
+  }
+  
+  nav {
+    gap: 0.5rem;
+    font-size: 12px;
+  }
+  
+  .nav-link {
+    font-size: 12px;
+    padding: 0.25rem 0.5rem;
+  }
+  
+  #timer span {
+    font-size: 1.75rem;
+  }
+  
+  .btn-primary,
+  .btn-secondary {
+    padding: 0.625rem 1.25rem;
+    font-size: 13px;
+  }
+  
+  section {
+    padding-left: 4vw !important;
+    padding-right: 4vw !important;
+  }
+}
