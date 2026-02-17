@@ -476,6 +476,7 @@ document.getElementById('next-conflict-btn').onclick = () => {
 document.getElementById('restart-btn').onclick = startGame;
 document.getElementById('return-home-btn').onclick = () => window.location.href = 'index.html';
 document.getElementById('skip-btn').onclick = skipConflict;
+document.getElementById('back-to-menu-btn').onclick = initGame;
 
 // ===== INITIALIZATION =====
 initGame();
