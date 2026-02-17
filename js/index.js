@@ -249,10 +249,8 @@ if (cmdInput) {
     cmdInput.addEventListener("keydown", e => {
         if (e.key !== "Enter") return;
         const input = cmdInput.value.trim().toLowerCase();
-        if (input === "git fork githubclub-sith" ||
-            input === "git fork" ||
-            input === "git clone githubclub-sith" ||
-            input === "git clone") {
+        if (input === "git fork githubclub-sithyd" ||
+            input === "git clone githubclub-sithyd") {
             document.getElementById('cmd-test').classList.add('hidden');
             document.getElementById('color-test').classList.remove('hidden');
             renderColorDoors();
