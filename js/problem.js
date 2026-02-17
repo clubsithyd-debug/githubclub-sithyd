@@ -1,4 +1,4 @@
-/* ===============================
+﻿/* ===============================
    PROBLEM STATEMENTS JS
    SymbiHackathon 2026
    =============================== */
@@ -115,7 +115,7 @@ function parseCSV(text) {
 }
 
 // ── CSV Path — change this to update the source ───────────────────
-//const CSV_PATH = './assets/data/problems.csv';
+const CSV_PATH = './assets/data/problems.csv';
 
 async function autoLoadCSV() {
     try {
@@ -130,8 +130,9 @@ async function autoLoadCSV() {
         csvStatusTxt.innerHTML = `<i class="fa-solid fa-circle-check mr-2"></i>Loaded ${data.length} problem statements.`;
 
     } catch (e) {
+        loadData(SAMPLE_DATA);
         csvStatus.className = 'csv-status-bar error mb-6';
-        csvStatusTxt.innerHTML = `<i class="fa-solid fa-triangle-exclamation mr-2"></i>Could not load <code style="color:var(--ghgreen)">${CSV_PATH}</code> — ${e.message}`;
+        csvStatusTxt.innerHTML = '<i class="fa-solid fa-triangle-exclamation mr-2"></i>Could not load <code style="color:var(--ghgreen)">' + CSV_PATH + '</code> — showing sample data. (' + e.message + ')';
     }
 }
 
@@ -388,3 +389,4 @@ downloadBtn.addEventListener('click', downloadFilteredCSV);
 
 // ── Init — auto-fetch CSV from assets ────────────────────────────
 autoLoadCSV();
+

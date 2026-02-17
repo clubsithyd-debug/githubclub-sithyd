@@ -1,11 +1,11 @@
-/* ===============================
+﻿/* ===============================
    GLOBAL BASE
    =============================== */
 
 html,
 body {
   background-color: #010409;
-  font-size: 17px;
+  font-size: 16px;
   overflow-x: hidden;
   margin: 0;
   padding: 0;
@@ -32,6 +32,22 @@ body {
   color: var(--ghtext);
   line-height: 1.6;
   font-family: 'Inter', system-ui, sans-serif;
+}
+
+img,
+video,
+canvas,
+svg {
+  max-width: 100%;
+  height: auto;
+}
+
+iframe {
+  max-width: 100%;
+}
+
+footer {
+  text-align: center;
 }
 
 *,
@@ -118,7 +134,7 @@ a:hover {
   text-decoration: none;
   position: relative;
   transition: color 0.3s ease;
-  font-size: 20px;
+  font-size: inherit;
   font-weight: 600;
 }
 
@@ -553,7 +569,7 @@ body, p, span, div, h1, h2, h3, h4, h5, h6, a, button, input, textarea, select {
   }
   
   .nav-link {
-    font-size: 14px;
+    font-size: inherit;
     padding: 0.25rem 0.5rem;
   }
   
@@ -645,7 +661,7 @@ body, p, span, div, h1, h2, h3, h4, h5, h6, a, button, input, textarea, select {
   }
   
   .nav-link {
-    font-size: 12px;
+    font-size: inherit;
     padding: 0.25rem 0.5rem;
   }
   
