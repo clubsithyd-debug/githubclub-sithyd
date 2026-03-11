@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hackathon Registration | GitHub Club</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Fira+Code:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/register.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="nav-wrap">
+      <a href="index.html" class="back-btn nav-link">← Back</a>
+      <div class="brand">
+        <img src="./assets/image/GitHub_Club.jpg" alt="GitHub Club Logo">
+        <span>GitHub Club · SIT-H</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="page">
+    <section class="hero">
+      <p class="eyebrow mono">SymbiHackathon Registration</p>
+      <h1>Team Registration</h1>
+      <p class="subtext">Register your team for the hackathon. The team leader is the primary point of contact.</p>
+    </section>
+
+    <section class="panel">
+      <form id="registration-form" novalidate>
+        <div class="section">
+          <div class="section-head">
+            <h2>Team Information</h2>
+            <span class="section-note">Section 1</span>
+          </div>
+          <div class="grid two">
+            <div class="field">
+              <label for="team-name">Team Name</label>
+              <input id="team-name" name="team_name" type="text" required>
+            </div>
+            <div class="field">
+              <label for="college-name">College / University Name</label>
+              <input id="college-name" name="college_name" type="text" required>
+            </div>
+            <div class="field">
+              <label for="city">City</label>
+              <input id="city" name="city" type="text" required>
+            </div>
+            <div class="field">
+              <label for="team-size">Team Size</label>
+              <select id="team-size" name="team_size" required>
+                <option value="">Select team size</option>
+                <option value="3">3 Members</option>
+                <option value="4">4 Members</option>
+                <option value="5">5 Members</option>
+              </select>
+              <p class="hint">Minimum 3, maximum 5.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-head">
+            <h2>Primary Contact (Team Leader)</h2>
+            <span class="section-note">Section 2</span>
+          </div>
+          <div class="grid two">
+            <div class="field">
+              <label for="leader-name">Full Name</label>
+              <input id="leader-name" name="leader_name" type="text" required>
+            </div>
+            <div class="field">
+              <label for="leader-prn">PRN / Student ID</label>
+              <input id="leader-prn" name="leader_prn" type="text" required>
+            </div>
+            <div class="field">
+              <label for="leader-email">Email Address</label>
+              <input id="leader-email" name="leader_email" type="email" required>
+            </div>
+            <div class="field">
+              <label for="leader-phone">Phone Number</label>
+              <input id="leader-phone" name="leader_phone" type="tel" required>
+            </div>
+            <div class="field full">
+              <label for="leader-github">GitHub Profile Link</label>
+              <input id="leader-github" name="leader_github" type="url" required>
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-head">
+            <h2>Alternate Contact</h2>
+            <span class="section-note">Section 3</span>
+          </div>
+          <div class="grid two">
+            <div class="field">
+              <label for="alt-name">Full Name</label>
+              <input id="alt-name" name="alt_name" type="text" required>
+            </div>
+            <div class="field">
+              <label for="alt-prn">PRN / Student ID</label>
+              <input id="alt-prn" name="alt_prn" type="text" required>
+            </div>
+            <div class="field">
+              <label for="alt-email">Email Address</label>
+              <input id="alt-email" name="alt_email" type="email" required>
+            </div>
+            <div class="field">
+              <label for="alt-phone">Phone Number</label>
+              <input id="alt-phone" name="alt_phone" type="tel" required>
+            </div>
+          </div>
+          <p class="hint">Alternate contact cannot be the same as the team leader.</p>
+        </div>
+
+        <div class="section">
+          <div class="section-head">
+            <h2>Team Members</h2>
+            <span class="section-note">Section 4</span>
+          </div>
+          <p class="hint">Leader is Member 1. Provide remaining members.</p>
+          <div class="grid two">
+            <div class="field">
+              <label for="member2-name">Member 2 Name</label>
+              <input id="member2-name" name="member2_name" type="text" required>
+            </div>
+            <div class="field">
+              <label for="member2-prn">Member 2 PRN</label>
+              <input id="member2-prn" name="member2_prn" type="text" required>
+            </div>
+            <div class="field">
+              <label for="member3-name">Member 3 Name</label>
+              <input id="member3-name" name="member3_name" type="text" required>
+            </div>
+            <div class="field">
+              <label for="member3-prn">Member 3 PRN</label>
+              <input id="member3-prn" name="member3_prn" type="text" required>
+            </div>
+          </div>
+
+          <div id="member4-block" class="grid two hidden">
+            <div class="field">
+              <label for="member4-name">Member 4 Name</label>
+              <input id="member4-name" name="member4_name" type="text">
+            </div>
+            <div class="field">
+              <label for="member4-prn">Member 4 PRN</label>
+              <input id="member4-prn" name="member4_prn" type="text">
+            </div>
+          </div>
+
+          <div id="member5-block" class="grid two hidden">
+            <div class="field">
+              <label for="member5-name">Member 5 Name</label>
+              <input id="member5-name" name="member5_name" type="text">
+            </div>
+            <div class="field">
+              <label for="member5-prn">Member 5 PRN</label>
+              <input id="member5-prn" name="member5_prn" type="text">
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-head">
+            <h2>Agreement</h2>
+            <span class="section-note">Section 5</span>
+          </div>
+          <label class="checkbox">
+            <input id="agreement" type="checkbox" required>
+            <span>I confirm that all information provided is correct and the team agrees to follow the hackathon rules.</span>
+          </label>
+        </div>
+
+        <div class="section payment">
+          <div class="section-head">
+            <h2>Payment</h2>
+            <span class="section-note">Section 6</span>
+          </div>
+          <div class="payment-row">
+            <div>
+              <p class="mono label">Registration Fee</p>
+              <p class="value">Rs 500 per team</p>
+            </div>
+          </div>
+          <!-- TODO: Integrate Easebuzz payment API here -->
+        </div>
+
+        <div class="actions">
+          <button type="submit" class="btn primary">Register</button>
+          <p class="hint">You will receive further instructions via email.</p>
+        </div>
+
+        <div id="form-alert" class="alert hidden"></div>
+      </form>
+    </section>
+
+    <section id="confirmation" class="panel hidden">
+      <div class="section">
+        <div class="section-head">
+          <h2>Registration Successful</h2>
+        </div>
+        <p class="subtext">Team Name: <span id="confirm-team" class="mono"></span></p>
+        <p class="subtext">Registration ID: <span id="confirm-id" class="mono"></span></p>
+        <p class="hint">You will receive further instructions via email.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span>© 2026 GitHub Club · SIT Hyderabad</span>
+  </footer>
+
+  <script src="js/register.js"></script>
+</body>
+</html>

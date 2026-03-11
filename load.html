@@ -63,7 +63,12 @@
     const profile  = (effType === 'slow-2g' || effType === '2g') ? 'slow'
                    : effType === '3g' ? 'medium' : 'fast';
 
-    const T = { fast:{ty:14,w:0.7}, medium:{ty:22,w:1.1}, slow:{ty:35,w:1.6} }[profile];
+    const baseT = { fast:{ty:14,w:0.7}, medium:{ty:22,w:1.1}, slow:{ty:35,w:1.6} }[profile];
+    // Scale timings so the whole loader sits around ~10–12s
+    const TARGET_MS = 7500;
+    const BASE_MS = { fast:3500, medium:4500, slow:6000 }[profile];
+    const scale = Math.min(Math.max(TARGET_MS / BASE_MS, 1.6), 3.4);
+    const T = { ty: baseT.ty * scale, w: baseT.w * scale };
 
     const speedLabel = downlink >= 1 ? `${downlink.toFixed(1)} Mbps` : `${(downlink*1000).toFixed(0)} Kbps`;
     const memMb = performance?.memory ? Math.round(performance.memory.jsHeapSizeLimit/1024/1024)+'MB' : '64MB';
